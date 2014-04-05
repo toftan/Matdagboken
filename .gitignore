@@ -1,0 +1,3 @@
+#exlude bin and gen folder
+android/bin/*
+android/gen/*
