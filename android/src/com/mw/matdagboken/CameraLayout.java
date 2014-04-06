@@ -17,14 +17,14 @@ public class CameraLayout
 {
 	private LinearLayout mLayout;
 	private ImageView mImageView;
-	public static final int REQUEST_CODE_CAMERA_PHOTO = 0xf4e2d2de; //generated from http://www.guidgen.com/
+	public static final int REQUEST_CODE_CAMERA_PHOTO = 0x40a46757; //generated from http://www.guidgen.com/
 	
 	CameraLayout(Context context) 
 	{
 		mLayout = new LinearLayout(context);
 		mLayout.setBackgroundColor(0xFFFFFFFF);
-		mImageView = new ImageView(context);
-		mImageView.setBackgroundColor(0xFFFFFFFF);
+		mImageView = new ImageView(context);  
+		mImageView.setBackgroundColor(0xFF00FFFF);
 		mImageView.setScaleType(ScaleType.CENTER_INSIDE);
 		mLayout.addView(mImageView);
 	}
@@ -58,7 +58,6 @@ public class CameraLayout
 	        Bundle extras = data.getExtras();
 	        Bitmap imageBitmap = (Bitmap) extras.get("data");
 			mImageView.setImageBitmap(imageBitmap);
-			mLayout.removeAllViews();
 	    }
 	}
 }
