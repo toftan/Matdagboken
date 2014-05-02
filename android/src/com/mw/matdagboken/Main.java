@@ -12,7 +12,7 @@ public class Main extends Activity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
-		super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState); //Comment 2
 		
 		mCameraLayout = new CameraLayout(this);
 		setContentView(mCameraLayout.getContentView());
