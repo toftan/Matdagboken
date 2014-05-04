@@ -23,7 +23,7 @@ public class Main extends Activity implements OnClickListener
 	private LinearLayout mLayout;
 	private Button mCameraButton;
 	private Button mSaveButton;
-	private DiaryEntry mDiaryEntry;
+	private Entry mDiaryEntry;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -47,7 +47,7 @@ public class Main extends Activity implements OnClickListener
 		mLayout.addView(mCameraButton);
 		mLayout.addView(mSaveButton);
 		
-		mDiaryEntry = new DiaryEntry();
+		mDiaryEntry = new Entry();
 		
 		setContentView(mLayout);
 	}
@@ -117,7 +117,7 @@ public class Main extends Activity implements OnClickListener
 	@Override
 	public void onClick(View v)
 	{
-		if (v == mCameraButton)
+		/*if (v == mCameraButton)
 		{
             Intent cameraScreen = new Intent(getApplicationContext(), CameraActivity.class);
 			startActivity(cameraScreen);
@@ -125,6 +125,11 @@ public class Main extends Activity implements OnClickListener
 		else if (v == mSaveButton)
 		{
 			trySaveDiaryEntry();
+		}*/
+		if (v == mCameraButton)
+		{
+            Intent newEntryScreen = new Intent(getApplicationContext(), NewEntryActivity.class);
+			startActivity(newEntryScreen);
 		}
 	}
 	
