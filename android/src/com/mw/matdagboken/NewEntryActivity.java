@@ -18,44 +18,39 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.DisplayMetrics;
-import android.view.ViewGroup.LayoutParams;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 
-public class CameraActivity extends Activity
+public class NewEntryActivity extends Activity
 {
-	private LinearLayout mLayout;
-	private ImageView mImageView;
+	private Date mDate;
 	private static final int REQUEST_CODE_CAMERA_PHOTO = 0x40a46757; //generated from http://www.guidgen.com/
-	private File mImageFile = null;
-	
+	private File mImageFile = null;	
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
+	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.newentryactivity);
 		
-		DisplayMetrics metrics = new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		int size = Math.min(metrics.heightPixels, metrics.widthPixels);
-		
-		mImageView = new ImageView(this);
-		mImageView.setImageResource(R.drawable.ic_camera_background);
-		mImageView.setScaleType(ScaleType.CENTER_INSIDE);
-		mImageView.setLayoutParams(new LayoutParams(size, size));
-		mImageView.requestLayout();
-
-		mLayout = new LinearLayout(this);
-		mLayout.setBackgroundColor(0xFFFFFFFF);
-		mLayout.setOrientation(LinearLayout.VERTICAL);
-		mLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-		mLayout.addView(mImageView);
-
-		setContentView(mLayout);
-		
-		tryStartCameraActivity();
+		mDate = new Date();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
+	    String dateStamp = dateFormat.format(mDate); 
+	    EditText dateEntry = (EditText) findViewById(R.id.dateEntry);
+	    dateEntry.setText(dateStamp);
+	    
+	    SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+	    String dayStamp = dayFormat.format(mDate); 
+	    TextView dayEntry = (TextView) findViewById(R.id.dayTitle);
+	    dayEntry.setText(dayStamp);
+	    
+	    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+	    String timeStamp = timeFormat.format(mDate);
+	    EditText timeEntry = (EditText) findViewById(R.id.timeEntry);
+	    timeEntry.setText(timeStamp);
+	    
+	   // tryStartCameraActivity();
 	}
 	
 	private static File tryCreateCameraImageFile()
@@ -169,8 +164,9 @@ public class CameraActivity extends Activity
 	    {
 	    	if (mImageFile != null && mImageFile.exists())
 	    	{
-	    		Bitmap bitmap = CameraActivity.decodeAndCropFileToFitSize(mImageFile, 512);
-	    		mImageView.setImageBitmap(bitmap);
+	    		ImageView image = (ImageView) findViewById(R.id.foodImage);
+	    		Bitmap bitmap = decodeAndCropFileToFitSize(mImageFile, 512);
+	    		image.setImageBitmap(bitmap);
 	    	}
 	    }
 	}

@@ -1,4 +1,5 @@
 #exlude bin and gen folder
 android/bin/*
 android/gen/*
+android/.metadata/*
 android/.settings/*

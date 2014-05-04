@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+   	android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+     <TextView
+        android:id="@+id/newEntryTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/newEntry_title" />
+    
+     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+     <EditText
+        android:id="@+id/dateEntry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:editable="false" />
+     
+     <ImageButton
+        android:id="@+id/calendarButton"
+        android:layout_width="50dp"
+  	 	android:layout_height="50dp"
+        android:layout_alignBottom="@+id/dateEntry"
+        android:layout_toRightOf="@+id/dateEntry"
+        android:cropToPadding="true"
+        android:src="@drawable/ic_camera_background" />
+    </RelativeLayout>
+    
+    <TextView
+        android:id="@+id/dayTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+     
+    <Spinner
+        android:id="@+id/mealTypeEntry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/meal_type"
+        android:prompt="@string/meal_prompt" />
+    
+    <EditText
+        android:id="@+id/timeEntry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/mealTypeEntry"
+        android:layout_toRightOf="@+id/mealTypeEntry"
+        android:ems="10"
+        android:inputType="time" />
+     </RelativeLayout>
+        
+    <ImageView
+        android:id="@+id/foodImage"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="center"
+        android:src="@drawable/ic_camera_background" />
+
+    <TextView
+        android:id="@+id/beverageTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/beverage_title" />
+
+    <EditText
+        android:id="@+id/beverageEntry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
+    <TextView
+        android:id="@+id/foodTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/food_title" />
+
+    <EditText
+        android:id="@+id/foodEntry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
+    <TextView
+        android:id="@+id/howTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/how_title" />
+
+    <EditText
+        android:id="@+id/howEntry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
+    <TextView
+        android:id="@+id/moodTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mood_title" />
+    
+    <EditText
+        android:id="@+id/moodEntry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
+    <TextView
+        android:id="@+id/commentTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/comment_title" />
+
+    <EditText
+        android:id="@+id/commentEntry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp" >
+        
+		<Button
+        	android:id="@+id/cancelButton"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:text="Cancel" />
+    
+    	<Button
+    	    android:id="@+id/saveButton"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:layout_alignParentRight="true"
+    	    android:text="Save" />
+
+     </RelativeLayout>
+
+</LinearLayout>
+</ScrollView>

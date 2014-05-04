@@ -1,7 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Matdagbokenpung</string>
+    <string name="app_name">Foodshot</string>
     <string name="action_settings">Settings</string>
-
+    
+    <string name="actionBar_backButton">Back</string>
+    
+    <string name="newEntry_title">Add a new entry:</string>
+    <string name="beverage_title">Beverage:</string>
+    <string name="food_title">Food:</string>
+    <string name="how_title">How and where:</string>
+    <string name="mood_title">Mood:</string>
+    <string name="comment_title">Comments:</string>
+ 
+    <string name="meal_prompt">Choose type of meal</string>
+    <string-array name="meal_type">
+        <item>Choose type of meal or snack...</item>
+        <item>Breakfast</item>
+        <item>Lunch</item>
+        <item>Dinner</item>
+        <item>Snack</item>
+        <item>Late snack</item>
+    </string-array>
+    
 </resources>
