@@ -6,6 +6,12 @@
     
     <string name="actionBar_backButton">Back</string>
     
+    <string name="listView_title">Add a photo</string>
+    <string-array name="listView_items">
+        <item>With camera</item>
+        <item>From gallery</item>
+    </string-array>
+    
     <string name="newEntry_title">Add a new entry:</string>
     <string name="beverage_title">Beverage:</string>
     <string name="food_title">Food:</string>

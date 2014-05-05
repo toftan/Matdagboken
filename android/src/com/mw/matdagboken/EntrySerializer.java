@@ -94,10 +94,10 @@ public class EntrySerializer
 		return false;
 	}
 	
-	public static boolean trySaveEntry(Entry entry, Bitmap bitmap)
+	public static boolean trySaveEntry(Entry entry, Bitmap bitmap, Date date)
 	{
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
-	    String timeStamp = dateFormat.format(new Date());
+	    String timeStamp = dateFormat.format(date);
 
 	    File jsonFile = tryCreateEntryFile(timeStamp, ".json");
 		if (jsonFile != null)
@@ -106,7 +106,7 @@ public class EntrySerializer
 				return false;
 		}
 		
-		File imageFile = tryCreateEntryFile(timeStamp, ".jpg");
+		File imageFile = tryCreateEntryFile(timeStamp, ".png");
 		if (imageFile != null)
 		{
 			if (!trySavePGNFile(imageFile, bitmap))

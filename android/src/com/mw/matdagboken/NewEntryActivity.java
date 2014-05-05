@@ -7,9 +7,13 @@ import java.util.Date;
 import java.util.Locale;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -18,21 +22,39 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
-public class NewEntryActivity extends Activity
+public class NewEntryActivity extends Activity implements View.OnClickListener, DialogInterface.OnClickListener
 {
 	private Date mDate;
-	private static final int REQUEST_CODE_CAMERA_PHOTO = 0x40a46757; //generated from http://www.guidgen.com/
-	private File mImageFile = null;	
+	private static final int REQUEST_CODE_CAMERA_PHOTO = 1000;
+	private static final int REQUEST_CODE_SELECT_PHOTO = 1001;
+	private File mImageFile = null;
+	private Entry mEntry = null;
+	private Button mSaveButton = null;
+	private Bitmap mImageBitmap = null;
+	private ImageView mImageView = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.newentryactivity);
+		
+		mEntry = new Entry();
+		mSaveButton = (Button) findViewById(R.id.saveButton);
+		mSaveButton.setOnClickListener(this);
+		
+		mImageView = (ImageView) findViewById(R.id.foodImage);
+		mImageView.setOnClickListener(this);
 		
 		mDate = new Date();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
@@ -50,7 +72,8 @@ public class NewEntryActivity extends Activity
 	    EditText timeEntry = (EditText) findViewById(R.id.timeEntry);
 	    timeEntry.setText(timeStamp);
 	    
-	   // tryStartCameraActivity();
+		mImageBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_camera_background);
+	    
 	}
 	
 	private static File tryCreateCameraImageFile()
@@ -157,17 +180,122 @@ public class NewEntryActivity extends Activity
 		}
 	}
 	
+	private void tryPickPhotoFromGallery()
+	{
+		Intent galleryIntent = new Intent(Intent.ACTION_PICK); // ONly images form SDCARD
+		galleryIntent.setType("image/*");
+		startActivityForResult(galleryIntent, REQUEST_CODE_SELECT_PHOTO);
+	}
+	
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) 
 	{
-	    if (requestCode == REQUEST_CODE_CAMERA_PHOTO && resultCode == Activity.RESULT_OK)
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		if(resultCode != Activity.RESULT_OK)
+		{
+			return;
+		}
+		
+	    if (requestCode == REQUEST_CODE_CAMERA_PHOTO)
 	    {
 	    	if (mImageFile != null && mImageFile.exists())
 	    	{
 	    		ImageView image = (ImageView) findViewById(R.id.foodImage);
-	    		Bitmap bitmap = decodeAndCropFileToFitSize(mImageFile, 512);
-	    		image.setImageBitmap(bitmap);
+	    		mImageBitmap = decodeAndCropFileToFitSize(mImageFile, 512);
+	    		image.setImageBitmap(mImageBitmap);
 	    	}
+	    }   
+	    else if(requestCode == REQUEST_CODE_SELECT_PHOTO)
+	    {
+			Uri selectedImage = data.getData();
+			String[] filePathColumn = {MediaStore.Images.Media.DATA};
+			
+			Cursor cursor = getContentResolver().query( selectedImage, filePathColumn, null, null, null);
+			cursor.moveToFirst();
+			
+			int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+			String filePath = cursor.getString(columnIndex);
+			cursor.close();
+			
+			File file = new File(filePath);
+			ImageView image = (ImageView) findViewById(R.id.foodImage);
+    		mImageBitmap = decodeAndCropFileToFitSize(file, 512);
+    		image.setImageBitmap(mImageBitmap);
 	    }
+	}
+	
+	//Add actions to action bar
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) 
+	{
+	    // Inflate the menu items for use in the action bar
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.newentryactionbar, menu);
+	    return super.onCreateOptionsMenu(menu);
+	}
+	
+	//Respond to actions in the action bar
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) 
+	{
+	    // Handle presses on the action bar items
+	    switch (item.getItemId()) 
+	    {
+	        case R.id.ac_backButton:
+	            goBack();
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
+	
+	public void goBack()
+	{
+		
+	}
+
+	@Override
+	public void onClick(View v)
+	{
+		if(v == mSaveButton)
+		{
+			mEntry.Date = mDate;
+			Spinner spinner = (Spinner) findViewById(R.id.mealTypeEntry);
+			mEntry.Meal = spinner.getSelectedItemPosition();
+			EditText beverage = (EditText) findViewById(R.id.beverageEntry);
+			mEntry.Beverage = beverage.getText().toString();
+			EditText food = (EditText) findViewById(R.id.foodEntry);
+			mEntry.Food = food.getText().toString();
+			EditText how = (EditText) findViewById(R.id.howEntry);
+			mEntry.How = how.getText().toString();
+			EditText mood = (EditText) findViewById(R.id.moodEntry);
+			mEntry.Mood = mood.getText().toString();
+			EditText comment = (EditText) findViewById(R.id.commentEntry);
+			mEntry.Comment = comment.getText().toString();
+				
+			EntrySerializer.trySaveEntry(mEntry, mImageBitmap, mEntry.Date); 
+		}	
+		else if(v == mImageView)
+		{			
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle(R.string.listView_title);
+			builder.setItems(R.array.listView_items, this);
+			AlertDialog alert = builder.create();
+			alert.show();		
+		}
+	}
+
+	@Override
+	public void onClick(DialogInterface dialog, int which)
+	{
+		if(which == 0)
+		{
+			tryStartCameraActivity();
+		}
+		else if(which == 1)
+		{
+			tryPickPhotoFromGallery();
+		}		
 	}
 }
