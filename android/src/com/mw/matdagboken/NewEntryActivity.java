@@ -3,11 +3,13 @@ package com.mw.matdagboken;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,22 +29,27 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 public class NewEntryActivity extends Activity implements View.OnClickListener, DialogInterface.OnClickListener
 {
-	private Date mDate;
+//	private Date mDate;
+	private Calendar mCalendar = null;
 	private static final int REQUEST_CODE_CAMERA_PHOTO = 1000;
 	private static final int REQUEST_CODE_SELECT_PHOTO = 1001;
 	private File mImageFile = null;
 	private Entry mEntry = null;
 	private Button mSaveButton = null;
 	private Button mCancelButton = null;
+	private ImageButton mCalendarButton = null;
 	private Bitmap mImageBitmap = null;
 	private ImageView mImageView = null;
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -60,19 +67,24 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 		mImageView = (ImageView) findViewById(R.id.foodImage);
 		mImageView.setOnClickListener(this);
 		
-		mDate = new Date();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
+		mCalendarButton = (ImageButton) findViewById(R.id.calendarButton);
+		mCalendarButton.setOnClickListener(this);
+		
+		//mDate = new Date();
+		mCalendar = Calendar.getInstance();
+		updateDateLabel();
+		/*SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
 	    String dateStamp = dateFormat.format(mDate); 
 	    EditText dateEntry = (EditText) findViewById(R.id.dateEntry);
-	    dateEntry.setText(dateStamp);
+	    dateEntry.setText(dateStamp);*/
 	    
 	    SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
-	    String dayStamp = dayFormat.format(mDate); 
+	    String dayStamp = dayFormat.format(mCalendar.getTime()); 
 	    TextView dayEntry = (TextView) findViewById(R.id.dayTitle);
 	    dayEntry.setText(dayStamp);
 	    
 	    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
-	    String timeStamp = timeFormat.format(mDate);
+	    String timeStamp = timeFormat.format(mCalendar.getTime());
 	    EditText timeEntry = (EditText) findViewById(R.id.timeEntry);
 	    timeEntry.setText(timeStamp);
 	    
@@ -264,7 +276,7 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 	{
 		if(v == mSaveButton)
 		{
-			mEntry.Date = mDate;
+			mEntry.Date = mCalendar.getTime();
 			Spinner spinner = (Spinner) findViewById(R.id.mealTypeEntry);
 			mEntry.Meal = spinner.getSelectedItemPosition();
 			EditText beverage = (EditText) findViewById(R.id.beverageEntry);
@@ -286,9 +298,12 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 		    String dateStamp = dateFormat.format(mDate); 
 		    EditText dateEntry = (EditText) findViewById(R.id.dateEntry);
 		    dateEntry.setText(dateStamp);*/
+			mCalendar = null;
+			mCalendar = Calendar.getInstance();
+			updateDateLabel();
 		    
 		    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
-		    String timeStamp = timeFormat.format(mDate);
+		    String timeStamp = timeFormat.format(mCalendar.getTime());
 		    EditText timeEntry = (EditText) findViewById(R.id.timeEntry);
 		    timeEntry.setText(timeStamp);
 		    
@@ -311,6 +326,24 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 			AlertDialog alert = builder.create();
 			alert.show();		
 		}
+		else if(v == mCalendarButton)
+		{			
+			DatePickerDialog datePickerDialog = new DatePickerDialog(NewEntryActivity.this, calendarDate, mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH),
+                    mCalendar.get(Calendar.DAY_OF_MONTH));
+			datePickerDialog.setTitle(R.string.datePicker_title);
+			(datePickerDialog.getDatePicker()).setCalendarViewShown(true); //Only available in API 11??
+			(datePickerDialog.getDatePicker()).setSpinnersShown(false);
+			datePickerDialog.show();
+
+		/*	DatePicker datePicker = new DatePicker(NewEntryActivity.this);
+			datePicker.setSpinnersShown(false);
+			
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle(R.string.datePicker_title);
+			builder.setView(datePicker);
+			AlertDialog alert = builder.create();
+			alert.show();		*/
+		}
 	}
 
 	@Override
@@ -325,4 +358,26 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 			tryPickPhotoFromGallery();
 		}		
 	}
+	
+	DatePickerDialog.OnDateSetListener calendarDate = new DatePickerDialog.OnDateSetListener() {
+
+	    @Override
+	    public void onDateSet(DatePicker view, int year, int monthOfYear,
+	            int dayOfMonth) {
+	        // TODO Auto-generated method stub
+	    	mCalendar.set(Calendar.YEAR, year);
+	    	mCalendar.set(Calendar.MONTH, monthOfYear);
+	    	mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+	    	updateDateLabel();
+	    }
+	};
+	
+	 private void updateDateLabel() 
+	 {
+		SimpleDateFormat calendarDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
+		
+		EditText dateEntry = (EditText) findViewById(R.id.dateEntry);
+		dateEntry.setText(calendarDateFormat.format(mCalendar.getTime()));
+	 }
+
 }

@@ -17,6 +17,8 @@
         <item>From gallery</item>
     </string-array>
     
+    <string name="datePicker_title">Pick a date</string>
+    
     <string name="newEntry_title">Add a new entry:</string>
     <string name="beverage_title">Beverage:</string>
     <string name="food_title">Food:</string>
