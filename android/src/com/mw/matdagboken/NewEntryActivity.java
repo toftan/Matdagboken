@@ -40,6 +40,7 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 	private File mImageFile = null;
 	private Entry mEntry = null;
 	private Button mSaveButton = null;
+	private Button mCancelButton = null;
 	private Bitmap mImageBitmap = null;
 	private ImageView mImageView = null;
 	
@@ -52,6 +53,9 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 		mEntry = new Entry();
 		mSaveButton = (Button) findViewById(R.id.saveButton);
 		mSaveButton.setOnClickListener(this);
+		
+		mCancelButton = (Button) findViewById(R.id.cancelButton);
+		mCancelButton.setOnClickListener(this);
 		
 		mImageView = (ImageView) findViewById(R.id.foodImage);
 		mImageView.setOnClickListener(this);
@@ -182,7 +186,7 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 	
 	private void tryPickPhotoFromGallery()
 	{
-		Intent galleryIntent = new Intent(Intent.ACTION_PICK); // ONly images form SDCARD
+		Intent galleryIntent = new Intent(Intent.ACTION_PICK); // Only images form SDCARD
 		galleryIntent.setType("image/*");
 		startActivityForResult(galleryIntent, REQUEST_CODE_SELECT_PHOTO);
 	}
@@ -276,6 +280,29 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 				
 			EntrySerializer.trySaveEntry(mEntry, mImageBitmap, mEntry.Date); 
 		}	
+		else if(v == mCancelButton)
+		{
+			/*SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
+		    String dateStamp = dateFormat.format(mDate); 
+		    EditText dateEntry = (EditText) findViewById(R.id.dateEntry);
+		    dateEntry.setText(dateStamp);*/
+		    
+		    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+		    String timeStamp = timeFormat.format(mDate);
+		    EditText timeEntry = (EditText) findViewById(R.id.timeEntry);
+		    timeEntry.setText(timeStamp);
+		    
+		    //Reset spinner option
+		    ((Spinner) findViewById(R.id.mealTypeEntry)).setSelection(0);;
+		    
+		    ((ImageView) findViewById(R.id.foodImage)).setImageResource(R.drawable.ic_camera_background); //Set mImageBitmap instead as in onCreate()?
+		  
+			((EditText) findViewById(R.id.beverageEntry)).setText("");
+			((EditText) findViewById(R.id.foodEntry)).setText("");
+			((EditText) findViewById(R.id.howEntry)).setText("");
+			((EditText) findViewById(R.id.moodEntry)).setText("");
+			((EditText) findViewById(R.id.commentEntry)).setText("");
+		}
 		else if(v == mImageView)
 		{			
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);

@@ -18,38 +18,44 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-public class Main extends Activity implements OnClickListener
+public class MainActivity extends Activity implements OnClickListener
 {
 	private LinearLayout mLayout;
-	private Button mCameraButton;
-	private Button mSaveButton;
+	private Button mNewEntryButton;
+	private Button mGalleryButton;
 	private Entry mDiaryEntry;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState); //Comment 2
+		setContentView(R.layout.mainactivity);
 		
-		mLayout = new LinearLayout(this);
+		mNewEntryButton = (Button) findViewById(R.id.newEntryButton);
+		mNewEntryButton.setOnClickListener(this);
+		
+		mGalleryButton = (Button) findViewById(R.id.galleryButton);
+		mGalleryButton.setOnClickListener(this);
+		
+	/*	mLayout = new LinearLayout(this);
 		mLayout.setBackgroundColor(0xFFFFFFFF);
 		mLayout.setOrientation(LinearLayout.VERTICAL);
 		
-		mCameraButton = new Button(this);
-		mCameraButton.setText("Take Picture");
-		mCameraButton.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-		mCameraButton.setOnClickListener(this);
+		mNewEntryButton = new Button(this);
+		mNewEntryButton.setText(R.string.newEntry_button);
+		mNewEntryButton.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+		mNewEntryButton.setOnClickListener(this); 
 		
-		mSaveButton = new Button(this);
-		mSaveButton.setText("Save Achievement");
-		mSaveButton.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-		mSaveButton.setOnClickListener(this);
+		mGalleryButton = new Button(this);
+		mGalleryButton.setText(R.string.gallery_button);
+		mGalleryButton.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+		mGalleryButton.setOnClickListener(this);
 
-		mLayout.addView(mCameraButton);
-		mLayout.addView(mSaveButton);
+		mLayout.addView(mNewEntryButton);
+		mLayout.addView(mGalleryButton);
+		setContentView(mLayout); */
 		
-		mDiaryEntry = new Entry();
-		
-		setContentView(mLayout);
+		mDiaryEntry = new Entry();	
 	}
 	
 	private File tryCreateDiaryJSONFile(String timeStamp)
@@ -117,19 +123,15 @@ public class Main extends Activity implements OnClickListener
 	@Override
 	public void onClick(View v)
 	{
-		/*if (v == mCameraButton)
-		{
-            Intent cameraScreen = new Intent(getApplicationContext(), CameraActivity.class);
-			startActivity(cameraScreen);
-		}
-		else if (v == mSaveButton)
-		{
-			trySaveDiaryEntry();
-		}*/
-		if (v == mCameraButton)
+		if (v == mNewEntryButton)
 		{
             Intent newEntryScreen = new Intent(getApplicationContext(), NewEntryActivity.class);
 			startActivity(newEntryScreen);
+		}
+		else if(v == mGalleryButton)
+		{
+			Intent newEntryScreen = new Intent(getApplicationContext(), GalleryActivity.class);
+			startActivity(newEntryScreen);	 
 		}
 	}
 	
