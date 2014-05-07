@@ -9,5 +9,6 @@ public class Entry
 	public String Beverage = "Lax";
 	public String Food = "Så jälva torrt";
 	public String How = "Så jälva torrt";
+	public String Mood = "Så jälva torrt";
 	public String Comment = "Så jälva torrt";
 }

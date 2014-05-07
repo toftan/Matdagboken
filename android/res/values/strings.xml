@@ -2,25 +2,37 @@
 <resources>
 
     <string name="app_name">Foodshot</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Settings</string>   
+    <string name="newEntry_button">New entry</string>
+    <string name="gallery_button">Gallery</string>
+    <string name="settings_button">Settings</string>   
+    <string name="saveButton_title">Save</string>
+    <string name="cancelButton_title">Clear</string>
     
     <string name="actionBar_backButton">Back</string>
+    
+    <string name="listView_title">Add a photo</string>
+    <string-array name="listView_items">
+        <item>With camera</item>
+        <item>From gallery</item>
+    </string-array>
+    
+    <string name="datePicker_title">Pick a date</string>
     
     <string name="newEntry_title">Add a new entry:</string>
     <string name="beverage_title">Beverage:</string>
     <string name="food_title">Food:</string>
     <string name="how_title">How and where:</string>
     <string name="mood_title">Mood:</string>
-    <string name="comment_title">Comments:</string>
+    <string name="comment_title">Notes:</string>
  
     <string name="meal_prompt">Choose type of meal</string>
     <string-array name="meal_type">
-        <item>Choose type of meal or snack...</item>
+        <item>Choose type of meal or snack</item>
         <item>Breakfast</item>
         <item>Lunch</item>
         <item>Dinner</item>
         <item>Snack</item>
-        <item>Late snack</item>
     </string-array>
     
 </resources>
