@@ -7,14 +7,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -35,8 +37,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
-public class NewEntryActivity extends Activity implements View.OnClickListener, DialogInterface.OnClickListener
+public class NewEntryActivity extends Activity implements View.OnClickListener, DialogInterface.OnClickListener, DatePickerDialog.OnDateSetListener, OnTimeSetListener
 {
 //	private Date mDate;
 	private Calendar mCalendar = null;
@@ -47,6 +50,7 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 	private Button mSaveButton = null;
 	private Button mCancelButton = null;
 	private ImageButton mCalendarButton = null;
+	private EditText mTimeEntry = null;
 	private Bitmap mImageBitmap = null;
 	private ImageView mImageView = null;
 
@@ -70,9 +74,17 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 		mCalendarButton = (ImageButton) findViewById(R.id.calendarButton);
 		mCalendarButton.setOnClickListener(this);
 		
+		mTimeEntry = (EditText) findViewById(R.id.timeEntry);
+		mTimeEntry.setOnClickListener(this);
+		
+		ActionBar actionBar = getActionBar();
+		actionBar.show();
+
+		
 		//mDate = new Date();
 		mCalendar = Calendar.getInstance();
 		updateDateLabel();
+		updateTimeLabel();
 		/*SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
 	    String dateStamp = dateFormat.format(mDate); 
 	    EditText dateEntry = (EditText) findViewById(R.id.dateEntry);
@@ -83,10 +95,10 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 	    TextView dayEntry = (TextView) findViewById(R.id.dayTitle);
 	    dayEntry.setText(dayStamp);
 	    
-	    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+	/*    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
 	    String timeStamp = timeFormat.format(mCalendar.getTime());
 	    EditText timeEntry = (EditText) findViewById(R.id.timeEntry);
-	    timeEntry.setText(timeStamp);
+	    timeEntry.setText(timeStamp);*/
 	    
 		mImageBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_camera_background);
 	    
@@ -298,14 +310,14 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 		    String dateStamp = dateFormat.format(mDate); 
 		    EditText dateEntry = (EditText) findViewById(R.id.dateEntry);
 		    dateEntry.setText(dateStamp);*/
-			mCalendar = null;
 			mCalendar = Calendar.getInstance();
 			updateDateLabel();
+			updateTimeLabel();
 		    
-		    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+		 /*   SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
 		    String timeStamp = timeFormat.format(mCalendar.getTime());
 		    EditText timeEntry = (EditText) findViewById(R.id.timeEntry);
-		    timeEntry.setText(timeStamp);
+		    timeEntry.setText(timeStamp);*/
 		    
 		    //Reset spinner option
 		    ((Spinner) findViewById(R.id.mealTypeEntry)).setSelection(0);;
@@ -328,7 +340,7 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 		}
 		else if(v == mCalendarButton)
 		{			
-			DatePickerDialog datePickerDialog = new DatePickerDialog(NewEntryActivity.this, calendarDate, mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH),
+			DatePickerDialog datePickerDialog = new DatePickerDialog(this, this, mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH),
                     mCalendar.get(Calendar.DAY_OF_MONTH));
 			datePickerDialog.setTitle(R.string.datePicker_title);
 			(datePickerDialog.getDatePicker()).setCalendarViewShown(true); //Only available in API 11??
@@ -343,6 +355,13 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 			builder.setView(datePicker);
 			AlertDialog alert = builder.create();
 			alert.show();		*/
+		}
+		else if(v == mTimeEntry)
+		{		
+			// Let user choose 24 hour view or AM/PM as future feature? 
+			TimePickerDialog timePickerDialog = new TimePickerDialog(this, this, mCalendar.get(Calendar.HOUR_OF_DAY), mCalendar.get(Calendar.MINUTE), true);
+			timePickerDialog.setTitle("Set time");
+			timePickerDialog.show();	
 		}
 	}
 
@@ -359,19 +378,6 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 		}		
 	}
 	
-	DatePickerDialog.OnDateSetListener calendarDate = new DatePickerDialog.OnDateSetListener() {
-
-	    @Override
-	    public void onDateSet(DatePicker view, int year, int monthOfYear,
-	            int dayOfMonth) {
-	        // TODO Auto-generated method stub
-	    	mCalendar.set(Calendar.YEAR, year);
-	    	mCalendar.set(Calendar.MONTH, monthOfYear);
-	    	mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-	    	updateDateLabel();
-	    }
-	};
-	
 	 private void updateDateLabel() 
 	 {
 		SimpleDateFormat calendarDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
@@ -379,5 +385,30 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 		EditText dateEntry = (EditText) findViewById(R.id.dateEntry);
 		dateEntry.setText(calendarDateFormat.format(mCalendar.getTime()));
 	 }
+	 
+	 private void updateTimeLabel() 
+	 {
+		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+		String timeStamp = timeFormat.format(mCalendar.getTime());
+		EditText timeEntry = (EditText) findViewById(R.id.timeEntry);
+		timeEntry.setText(timeStamp);
+	 }
+
+	@Override
+	public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
+	{
+		mCalendar.set(Calendar.YEAR, year);
+    	mCalendar.set(Calendar.MONTH, monthOfYear);
+    	mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+    	updateDateLabel();		
+	}
+
+	@Override
+	public void onTimeSet(TimePicker view, int hourOfDay, int minute)
+	{
+    	mCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+    	mCalendar.set(Calendar.MINUTE, minute);
+    	updateTimeLabel();
+	}
 
 }

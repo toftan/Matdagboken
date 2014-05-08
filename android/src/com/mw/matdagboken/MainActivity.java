@@ -8,13 +8,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -30,12 +30,15 @@ public class MainActivity extends Activity implements OnClickListener
 	{
 		super.onCreate(savedInstanceState); //Comment 2
 		setContentView(R.layout.mainactivity);
-		
+				
 		mNewEntryButton = (Button) findViewById(R.id.newEntryButton);
 		mNewEntryButton.setOnClickListener(this);
 		
 		mGalleryButton = (Button) findViewById(R.id.galleryButton);
 		mGalleryButton.setOnClickListener(this);
+		
+		ActionBar actionBar = getActionBar();
+		actionBar.show();
 		
 	/*	mLayout = new LinearLayout(this);
 		mLayout.setBackgroundColor(0xFFFFFFFF);
