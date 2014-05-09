@@ -133,55 +133,7 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 	    return null;
 	}
 	
-	private static Bitmap decodeAndCropFileToFitSize(File imageFile, int targetSize)
-	{
-	    // Get the dimensions of the bitmap
-	    BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-	    bmOptions.inJustDecodeBounds = true;
-	    BitmapFactory.decodeFile(imageFile.getAbsolutePath(), bmOptions);
-	    int photoW = bmOptions.outWidth;
-	    int photoH = bmOptions.outHeight;
-	    int minPhotoSize = Math.min(photoW, photoH);
-	    
-	    //This indicates that we failed to decode the image and can not proceed
-	    if (minPhotoSize <= 0)
-	    	return null;
-	    
-	    //Try to get target size
-	    targetSize = Math.min(targetSize, minPhotoSize);
-
-	    // Determine how much to scale down the image
-	    int scaleFactor = Math.max(1, Math.min(photoW/targetSize, photoH/targetSize));
-
-	    // Decode the image file into a Bitmap sized to fill the View
-	    bmOptions.inJustDecodeBounds = false;
-	    bmOptions.inSampleSize = scaleFactor;
-	    bmOptions.inPurgeable = true;
-	    
-	    //This will decode the bitmap into memory
-	    Bitmap fullBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath(), bmOptions);
-	    
-	    photoW = bmOptions.outWidth;
-	    photoH = bmOptions.outHeight;
-	    minPhotoSize = Math.min(photoW, photoH);
-	    if (minPhotoSize <= 0)
-	    	return null;
-	    
-	    //Create the target bitmap
-	    Bitmap croppedBitmap = Bitmap.createBitmap(targetSize, targetSize, Bitmap.Config.ARGB_8888);
-	    Canvas canvas = new Canvas(croppedBitmap);
-	    
-	    //Paint the loaded image into the new bitmap which later on will be saved
-	    int size = Math.min(photoW, photoH);
-	    int x = (photoW - size) / 2;
-	    int y = (photoH - size) / 2;
-	    Rect srcRect = new Rect(x, y, x + size, y + size);
-	    Rect dstRect = new Rect(0, 0, targetSize, targetSize);
-	    canvas.drawBitmap(fullBitmap, srcRect, dstRect, new Paint(Paint.FILTER_BITMAP_FLAG));
-
-	    fullBitmap.recycle();
-	    return croppedBitmap;
-	}
+	
 	
 	private void tryStartCameraActivity()
 	{
@@ -230,7 +182,7 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 	    	if (mImageFile != null && mImageFile.exists())
 	    	{
 	    		ImageView image = (ImageView) findViewById(R.id.foodImage);
-	    		mImageBitmap = decodeAndCropFileToFitSize(mImageFile, 512);
+	    		mImageBitmap = ImageHelper.decodeAndCropFileToFitSize(mImageFile, 512);
 	    		image.setImageBitmap(mImageBitmap);
 	    	}
 	    }   
@@ -248,7 +200,7 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 			
 			File file = new File(filePath);
 			ImageView image = (ImageView) findViewById(R.id.foodImage);
-    		mImageBitmap = decodeAndCropFileToFitSize(file, 512);
+    		mImageBitmap = ImageHelper.decodeAndCropFileToFitSize(file, 512);
     		image.setImageBitmap(mImageBitmap);
 	    }
 	}
