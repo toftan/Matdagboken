@@ -50,7 +50,7 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 	private Button mSaveButton = null;
 	private Button mCancelButton = null;
 	private ImageButton mCalendarButton = null;
-	private EditText mTimeEntry = null;
+	private Button mTimeEntry = null;
 	private Bitmap mImageBitmap = null;
 	private ImageView mImageView = null;
 
@@ -74,7 +74,7 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 		mCalendarButton = (ImageButton) findViewById(R.id.calendarButton);
 		mCalendarButton.setOnClickListener(this);
 		
-		mTimeEntry = (EditText) findViewById(R.id.timeEntry);
+		mTimeEntry = (Button) findViewById(R.id.timeEntry);
 		mTimeEntry.setOnClickListener(this);
 		
 		ActionBar actionBar = getActionBar();
@@ -313,7 +313,7 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 			// Let user choose 24 hour view or AM/PM as future feature? 
 			TimePickerDialog timePickerDialog = new TimePickerDialog(this, this, mCalendar.get(Calendar.HOUR_OF_DAY), mCalendar.get(Calendar.MINUTE), true);
 			timePickerDialog.setTitle("Set time");
-			timePickerDialog.show();	
+			timePickerDialog.show();
 		}
 	}
 
@@ -342,7 +342,7 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 	 {
 		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
 		String timeStamp = timeFormat.format(mCalendar.getTime());
-		EditText timeEntry = (EditText) findViewById(R.id.timeEntry);
+		Button timeEntry = (Button) findViewById(R.id.timeEntry);
 		timeEntry.setText(timeStamp);
 	 }
 
