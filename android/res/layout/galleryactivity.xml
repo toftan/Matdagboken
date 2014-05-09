@@ -3,9 +3,10 @@
     android:id="@+id/galleryGridView"
     android:layout_width="fill_parent" 
     android:layout_height="fill_parent"
-    android:numColumns="auto_fit"
-    android:gravity="center"
-    android:columnWidth="70dp"
+    android:numColumns="4"
+    android:verticalSpacing="0dp"
+    android:horizontalSpacing="0dp"
+    android:gravity="fill"
     android:stretchMode="columnWidth" >
 
 </GridView>

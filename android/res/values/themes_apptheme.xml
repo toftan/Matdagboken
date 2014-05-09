@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    
+	<!-- Application theme. -->
+    <style name="AppTheme" parent="@style/AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:windowActionBar">true</item>
+    	<item name="android:windowNoTitle">false</item>
+    	<item name="android:actionBarStyle">@style/ActionBarTheme</item>
+    </style>
+
+	<style name="AppBaseTheme" parent="@android:style/Theme.Holo.Light">
+    	<item name="android:buttonStyle">@style/ButtonAppTheme</item>
+    	<item name="android:imageButtonStyle">@style/ImageButtonAppTheme</item>
+    	<item name="android:dropDownSpinnerStyle">@style/SpinnerAppTheme</item>
+    	<item name="android:progressBarStyleHorizontal">@style/ProgressBarAppTheme</item>
+	</style>
+
+</resources>

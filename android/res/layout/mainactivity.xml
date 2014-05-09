@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent" 
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent" 
+    android:background="@drawable/ic_background_repeat">
 
-    <Button
-        android:id="@+id/newEntryButton"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content" 
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/newEntry_button" />
-
-    <Button
-        android:id="@+id/galleryButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/newEntryButton"
-        android:layout_centerHorizontal="true"
-        android:text="@string/gallery_button" />
+        android:layout_centerInParent="true">
+    
+	    <Button
+	        android:id="@+id/newEntryButton"
+	        style="@style/ButtonAppTheme"
+	        android:layout_width="220dp"
+	        android:layout_height="220dp"
+	        android:text="@string/newEntry_button" />
 	
-	<Button
-		android:id="@+id/settingsButton"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_alignParentRight="true"
-		android:text="@string/settings_button" />
+	    <Button
+	        android:id="@+id/galleryButton"
+	        style="@style/ButtonAppTheme"
+	        android:layout_width="220dp"
+	        android:layout_height="220dp"
+	        android:layout_below="@+id/newEntryButton"
+	        android:text="@string/gallery_button" />
+    
+    </LinearLayout>
 
 </RelativeLayout>

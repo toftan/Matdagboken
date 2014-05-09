@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
    	android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:padding="10dp" >
+    android:layout_height="wrap_content">
 
 
 <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/ic_background_repeat" 
+    android:padding="10dp">
     
      <TextView
         android:id="@+id/newEntryTitle"
+        style="@style/AppBaseTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/newEntry_title" />
@@ -21,20 +23,23 @@
         android:layout_height="wrap_content" >
 
      <EditText
-        android:id="@+id/dateEntry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:editable="false" />
+         android:id="@+id/dateEntry"
+         style="@style/EditTextStyle"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:inputType="none"
+         android:ems="10" />
      
      <ImageButton
-        android:id="@+id/calendarButton"
-        android:layout_width="50dp"
-  	 	android:layout_height="50dp"
-        android:layout_alignBottom="@+id/dateEntry"
-        android:layout_toRightOf="@+id/dateEntry"
-        android:cropToPadding="true"
-        android:src="@drawable/ic_camera_background" />
+         android:id="@+id/calendarButton"
+         style="@style/ButtonAppTheme"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignBottom="@+id/dateEntry"
+         android:layout_toRightOf="@+id/dateEntry"
+         android:cropToPadding="true"
+         android:src="@drawable/ic_calendar" />
+
     </RelativeLayout>
     
     <TextView
@@ -48,6 +53,7 @@
      
     <Spinner
         android:id="@+id/mealTypeEntry"
+        style="@style/SpinnerAppTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:entries="@array/meal_type"
@@ -55,6 +61,7 @@
     
     <EditText
         android:id="@+id/timeEntry"
+        style="@style/EditTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/mealTypeEntry"
@@ -78,6 +85,7 @@
 
     <EditText
         android:id="@+id/beverageEntry"
+        style="@style/EditTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -91,6 +99,7 @@
 
     <EditText
         android:id="@+id/foodEntry"
+        style="@style/EditTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -104,6 +113,7 @@
 
     <EditText
         android:id="@+id/howEntry"
+        style="@style/EditTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -117,6 +127,7 @@
     
     <EditText
         android:id="@+id/moodEntry"
+        style="@style/EditTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -130,6 +141,7 @@
 
     <EditText
         android:id="@+id/commentEntry"
+        style="@style/EditTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -141,13 +153,15 @@
         android:padding="10dp" >
         
 		<Button
-        	android:id="@+id/cancelButton"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:text="@string/cancelButton_title" />
+		    android:id="@+id/cancelButton"
+		    style="@style/ButtonAppTheme"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="@string/cancelButton_title" />
     
     	<Button
     	    android:id="@+id/saveButton"
+    	    style="@style/ButtonAppTheme"
     	    android:layout_width="wrap_content"
     	    android:layout_height="wrap_content"
     	    android:layout_alignParentRight="true"

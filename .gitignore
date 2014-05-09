@@ -3,3 +3,6 @@ android/bin/*
 android/gen/*
 android/.metadata/*
 android/.settings/*
+android/res/values/styles.xml
+
+android/res/menu/newentryactionbar.xml
