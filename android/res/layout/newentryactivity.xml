@@ -59,15 +59,14 @@
         android:entries="@array/meal_type"
         android:prompt="@string/meal_prompt" />
     
-    <EditText
+    <Button
         android:id="@+id/timeEntry"
-        style="@style/EditTextStyle"
+        style="@style/ButtonAppTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/mealTypeEntry"
         android:layout_toRightOf="@+id/mealTypeEntry"
-        android:ems="10"
-        android:editable="false"  />
+        android:ems="10"/>
      </RelativeLayout>
         
     <ImageView
