@@ -67,8 +67,7 @@
         android:layout_alignBottom="@+id/mealTypeEntry"
         android:layout_toRightOf="@+id/mealTypeEntry"
         android:ems="10"
-        android:inputType="time"
-        android:maxLength="5" />
+        android:editable="false"  />
      </RelativeLayout>
         
     <ImageView
