@@ -211,7 +211,7 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 	{
 	    // Inflate the menu items for use in the action bar
 	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.newentryactionbar, menu);
+	    inflater.inflate(R.menu.actionbar, menu);
 	    return super.onCreateOptionsMenu(menu);
 	}
 	
