@@ -7,14 +7,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -35,8 +37,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
-public class NewEntryActivity extends Activity implements View.OnClickListener, DialogInterface.OnClickListener
+public class NewEntryActivity extends Activity implements View.OnClickListener, DialogInterface.OnClickListener, DatePickerDialog.OnDateSetListener, OnTimeSetListener
 {
 //	private Date mDate;
 	private Calendar mCalendar = null;
@@ -47,6 +50,7 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 	private Button mSaveButton = null;
 	private Button mCancelButton = null;
 	private ImageButton mCalendarButton = null;
+	private EditText mTimeEntry = null;
 	private Bitmap mImageBitmap = null;
 	private ImageView mImageView = null;
 
@@ -70,9 +74,17 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 		mCalendarButton = (ImageButton) findViewById(R.id.calendarButton);
 		mCalendarButton.setOnClickListener(this);
 		
+		mTimeEntry = (EditText) findViewById(R.id.timeEntry);
+		mTimeEntry.setOnClickListener(this);
+		
+		ActionBar actionBar = getActionBar();
+		actionBar.show();
+
+		
 		//mDate = new Date();
 		mCalendar = Calendar.getInstance();
 		updateDateLabel();
+		updateTimeLabel();
 		/*SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
 	    String dateStamp = dateFormat.format(mDate); 
 	    EditText dateEntry = (EditText) findViewById(R.id.dateEntry);
@@ -83,10 +95,10 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 	    TextView dayEntry = (TextView) findViewById(R.id.dayTitle);
 	    dayEntry.setText(dayStamp);
 	    
-	    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+	/*    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
 	    String timeStamp = timeFormat.format(mCalendar.getTime());
 	    EditText timeEntry = (EditText) findViewById(R.id.timeEntry);
-	    timeEntry.setText(timeStamp);
+	    timeEntry.setText(timeStamp);*/
 	    
 		mImageBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_camera_background);
 	    
@@ -121,55 +133,7 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 	    return null;
 	}
 	
-	private static Bitmap decodeAndCropFileToFitSize(File imageFile, int targetSize)
-	{
-	    // Get the dimensions of the bitmap
-	    BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-	    bmOptions.inJustDecodeBounds = true;
-	    BitmapFactory.decodeFile(imageFile.getAbsolutePath(), bmOptions);
-	    int photoW = bmOptions.outWidth;
-	    int photoH = bmOptions.outHeight;
-	    int minPhotoSize = Math.min(photoW, photoH);
-	    
-	    //This indicates that we failed to decode the image and can not proceed
-	    if (minPhotoSize <= 0)
-	    	return null;
-	    
-	    //Try to get target size
-	    targetSize = Math.min(targetSize, minPhotoSize);
-
-	    // Determine how much to scale down the image
-	    int scaleFactor = Math.max(1, Math.min(photoW/targetSize, photoH/targetSize));
-
-	    // Decode the image file into a Bitmap sized to fill the View
-	    bmOptions.inJustDecodeBounds = false;
-	    bmOptions.inSampleSize = scaleFactor;
-	    bmOptions.inPurgeable = true;
-	    
-	    //This will decode the bitmap into memory
-	    Bitmap fullBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath(), bmOptions);
-	    
-	    photoW = bmOptions.outWidth;
-	    photoH = bmOptions.outHeight;
-	    minPhotoSize = Math.min(photoW, photoH);
-	    if (minPhotoSize <= 0)
-	    	return null;
-	    
-	    //Create the target bitmap
-	    Bitmap croppedBitmap = Bitmap.createBitmap(targetSize, targetSize, Bitmap.Config.ARGB_8888);
-	    Canvas canvas = new Canvas(croppedBitmap);
-	    
-	    //Paint the loaded image into the new bitmap which later on will be saved
-	    int size = Math.min(photoW, photoH);
-	    int x = (photoW - size) / 2;
-	    int y = (photoH - size) / 2;
-	    Rect srcRect = new Rect(x, y, x + size, y + size);
-	    Rect dstRect = new Rect(0, 0, targetSize, targetSize);
-	    canvas.drawBitmap(fullBitmap, srcRect, dstRect, new Paint(Paint.FILTER_BITMAP_FLAG));
-
-	    fullBitmap.recycle();
-	    return croppedBitmap;
-	}
+	
 	
 	private void tryStartCameraActivity()
 	{
@@ -218,7 +182,7 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 	    	if (mImageFile != null && mImageFile.exists())
 	    	{
 	    		ImageView image = (ImageView) findViewById(R.id.foodImage);
-	    		mImageBitmap = decodeAndCropFileToFitSize(mImageFile, 512);
+	    		mImageBitmap = ImageHelper.decodeAndCropFileToFitSize(mImageFile, 512);
 	    		image.setImageBitmap(mImageBitmap);
 	    	}
 	    }   
@@ -236,7 +200,7 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 			
 			File file = new File(filePath);
 			ImageView image = (ImageView) findViewById(R.id.foodImage);
-    		mImageBitmap = decodeAndCropFileToFitSize(file, 512);
+    		mImageBitmap = ImageHelper.decodeAndCropFileToFitSize(file, 512);
     		image.setImageBitmap(mImageBitmap);
 	    }
 	}
@@ -298,14 +262,14 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 		    String dateStamp = dateFormat.format(mDate); 
 		    EditText dateEntry = (EditText) findViewById(R.id.dateEntry);
 		    dateEntry.setText(dateStamp);*/
-			mCalendar = null;
 			mCalendar = Calendar.getInstance();
 			updateDateLabel();
+			updateTimeLabel();
 		    
-		    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+		 /*   SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
 		    String timeStamp = timeFormat.format(mCalendar.getTime());
 		    EditText timeEntry = (EditText) findViewById(R.id.timeEntry);
-		    timeEntry.setText(timeStamp);
+		    timeEntry.setText(timeStamp);*/
 		    
 		    //Reset spinner option
 		    ((Spinner) findViewById(R.id.mealTypeEntry)).setSelection(0);;
@@ -328,7 +292,7 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 		}
 		else if(v == mCalendarButton)
 		{			
-			DatePickerDialog datePickerDialog = new DatePickerDialog(NewEntryActivity.this, calendarDate, mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH),
+			DatePickerDialog datePickerDialog = new DatePickerDialog(this, this, mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH),
                     mCalendar.get(Calendar.DAY_OF_MONTH));
 			datePickerDialog.setTitle(R.string.datePicker_title);
 			(datePickerDialog.getDatePicker()).setCalendarViewShown(true); //Only available in API 11??
@@ -343,6 +307,13 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 			builder.setView(datePicker);
 			AlertDialog alert = builder.create();
 			alert.show();		*/
+		}
+		else if(v == mTimeEntry)
+		{		
+			// Let user choose 24 hour view or AM/PM as future feature? 
+			TimePickerDialog timePickerDialog = new TimePickerDialog(this, this, mCalendar.get(Calendar.HOUR_OF_DAY), mCalendar.get(Calendar.MINUTE), true);
+			timePickerDialog.setTitle("Set time");
+			timePickerDialog.show();	
 		}
 	}
 
@@ -359,19 +330,6 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 		}		
 	}
 	
-	DatePickerDialog.OnDateSetListener calendarDate = new DatePickerDialog.OnDateSetListener() {
-
-	    @Override
-	    public void onDateSet(DatePicker view, int year, int monthOfYear,
-	            int dayOfMonth) {
-	        // TODO Auto-generated method stub
-	    	mCalendar.set(Calendar.YEAR, year);
-	    	mCalendar.set(Calendar.MONTH, monthOfYear);
-	    	mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-	    	updateDateLabel();
-	    }
-	};
-	
 	 private void updateDateLabel() 
 	 {
 		SimpleDateFormat calendarDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
@@ -379,5 +337,30 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 		EditText dateEntry = (EditText) findViewById(R.id.dateEntry);
 		dateEntry.setText(calendarDateFormat.format(mCalendar.getTime()));
 	 }
+	 
+	 private void updateTimeLabel() 
+	 {
+		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+		String timeStamp = timeFormat.format(mCalendar.getTime());
+		EditText timeEntry = (EditText) findViewById(R.id.timeEntry);
+		timeEntry.setText(timeStamp);
+	 }
+
+	@Override
+	public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
+	{
+		mCalendar.set(Calendar.YEAR, year);
+    	mCalendar.set(Calendar.MONTH, monthOfYear);
+    	mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+    	updateDateLabel();		
+	}
+
+	@Override
+	public void onTimeSet(TimePicker view, int hourOfDay, int minute)
+	{
+    	mCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+    	mCalendar.set(Calendar.MINUTE, minute);
+    	updateTimeLabel();
+	}
 
 }
