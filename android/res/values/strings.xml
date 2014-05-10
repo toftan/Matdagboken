@@ -15,11 +15,9 @@
     <string name="gallery_button">Gallery</string>
     <string name="settings_button">Settings</string>   
     <string name="saveButton_title">Save</string>
-    <string name="cancelButton_title">Clear</string>
+    <string name="cancelButton_title">Cancel</string>
     
-    <string name="actionBar_newEntry">New Entry</string>
-    <string name="actionBar_main">FoodShot</string>
-    <string name="actionBar_backButton">Back</string>
+    <string name="toast_save">Saved</string>
     <string name="actionBar_help">Help</string>
     
     <string name="listView_title">Add a photo</string>

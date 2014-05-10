@@ -5,7 +5,7 @@
 
     <item
     	android:parentActivityName="com.mw.matdagboken.MainActivity"
-        android:id="@+id/ac_backButton"
+        android:id="@+id/ac_help"
         android:icon="@drawable/ic_help"
         android:title="@string/actionBar_help"
         android:showAsAction="always"/>
