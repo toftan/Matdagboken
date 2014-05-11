@@ -2,12 +2,15 @@ package com.mw.matdagboken;
 
 import java.io.File;
 import java.util.ArrayList;
+
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 public class ImageAdapter extends BaseAdapter
 {
@@ -42,20 +45,24 @@ public class ImageAdapter extends BaseAdapter
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        ImageView imageView;
+    	LinearLayout layout;
         if (convertView == null)  // if it's not recycled, initialize some attributes
-        { 
-            imageView = new ImageView(mContext);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        {
+        	layout = (LinearLayout) View.inflate(parent.getContext(), R.layout.galleryitem, null);
         } 
         else 
         {
-            imageView = (ImageView) convertView;
+        	layout = (LinearLayout) convertView;
         }
-
-        File imagefile = (File) getItem(position);
-        Bitmap image = ImageHelper.decodeAndCropFileToFitSize(imagefile, 128);
-        imageView.setImageBitmap(image);
-        return imageView;
+        
+        ImageView imageView = (ImageView) layout.findViewById(R.id.gallery_image);
+        if (imageView != null)
+        {
+        	File imagefile = (File) getItem(position);
+            Bitmap bitmap = ImageHelper.decodeAndCropFileToFitSize(imagefile, 128);
+            imageView.setImageBitmap(bitmap);
+        }
+        
+        return layout;
     }
 }
