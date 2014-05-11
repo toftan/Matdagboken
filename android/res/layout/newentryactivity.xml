@@ -21,25 +21,25 @@
      <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-
-     <EditText
-         android:id="@+id/dateEntry"
-         style="@style/EditTextStyle"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:inputType="none"
-         android:ems="10" />
-     
-     <ImageButton
-         android:id="@+id/calendarButton"
-         style="@style/ButtonAppTheme"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignBottom="@+id/dateEntry"
-         android:layout_toRightOf="@+id/dateEntry"
-         android:cropToPadding="true"
-         android:src="@drawable/ic_calendar" />
-
+        
+	     <EditText
+	         android:id="@+id/dateEntry"
+	         style="@style/EditTextStyle"
+	         android:layout_width="wrap_content"
+	         android:layout_height="wrap_content"
+	         android:inputType="none"
+	         android:ems="10" />
+	     
+	     <ImageButton
+	         android:id="@+id/calendarButton"
+	         style="@style/ButtonAppTheme"
+	         android:layout_width="wrap_content"
+	         android:layout_height="wrap_content"
+	         android:layout_alignBottom="@+id/dateEntry"
+	         android:layout_toRightOf="@+id/dateEntry"
+	         android:cropToPadding="true"
+	         android:src="@drawable/ic_calendar" />
+	     
     </RelativeLayout>
     
     <TextView
@@ -51,23 +51,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
      
-    <Spinner
-        android:id="@+id/mealTypeEntry"
-        style="@style/SpinnerAppTheme"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:entries="@array/meal_type"
-        android:prompt="@string/meal_prompt" />
-    
-    <Button
-        android:id="@+id/timeEntry"
-        style="@style/ButtonAppTheme"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/mealTypeEntry"
-        android:layout_toRightOf="@+id/mealTypeEntry"
-        android:ems="10"/>
-     </RelativeLayout>
+	    <Spinner
+	        android:id="@+id/mealTypeEntry"
+	        style="@style/SpinnerAppTheme"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:entries="@array/meal_type"
+	        android:prompt="@string/meal_prompt" />
+	    
+	    <Button
+	        android:id="@+id/timeEntry"
+	        style="@style/ButtonAppTheme"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBottom="@+id/mealTypeEntry"
+	        android:layout_toRightOf="@+id/mealTypeEntry"
+	        android:ems="10"/>
+	     </RelativeLayout>
         
     <ImageView
         android:id="@+id/foodImage"
@@ -103,7 +103,60 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textMultiLine" />
+    
+    <TextView
+        android:id="@+id/moodTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mood_title" />
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:orientation="horizontal"
+   		android:layout_gravity="center_horizontal">
+		
+        <ImageButton
+         android:id="@+id/mood_normal"
+         android:src="@drawable/ic_normal"
+         android:layout_width="48dp"
+         android:layout_height="48dp"
+         style="@style/ImageButtonAppTheme"/>
+        <ImageButton
+         android:id="@+id/mood_happy"
+         android:src="@drawable/ic_happy"
+         android:layout_width="48dp"
+         android:layout_height="48dp"
+         style="@style/ImageButtonAppThemeNoCol"/>
+        <ImageButton
+         android:id="@+id/mood_stressed"
+         android:src="@drawable/ic_stressed"
+         android:layout_width="48dp"
+         android:layout_height="48dp"
+         style="@style/ImageButtonAppThemeNoCol"/>
+        <ImageButton
+         android:id="@+id/mood_sleepy"
+         android:src="@drawable/ic_sleepy"
+         android:layout_width="48dp"
+         android:layout_height="48dp"
+         style="@style/ImageButtonAppThemeNoCol"/>
+        <ImageButton
+         android:id="@+id/mood_angry"
+         android:src="@drawable/ic_angry"
+         android:layout_width="48dp"
+         android:layout_height="48dp"
+         style="@style/ImageButtonAppThemeNoCol"/>
+    
+    </LinearLayout>
+    
+    <EditText
+        android:id="@+id/moodEntry"
+        style="@style/EditTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+    
     <TextView
         android:id="@+id/howTitle"
         android:layout_width="wrap_content"
@@ -112,20 +165,6 @@
 
     <EditText
         android:id="@+id/howEntry"
-        style="@style/EditTextStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textMultiLine" />
-
-    <TextView
-        android:id="@+id/moodTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/mood_title" />
-    
-    <EditText
-        android:id="@+id/moodEntry"
         style="@style/EditTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -10,6 +10,14 @@
   <style name="ImageButtonAppTheme" parent="android:Widget.Holo.Light.ImageButton">
 	  <item name="android:background">@drawable/apptheme_btn_default_holo_light</item>
   </style>
+  
+  <style name="ButtonAppThemeNoCol" parent="android:Widget.Holo.Light.Button">
+	  <item name="android:background">@drawable/appthemenocol_btn_default_holo_light</item>
+  </style>
+
+  <style name="ImageButtonAppThemeNoCol" parent="android:Widget.Holo.Light.ImageButton">
+	  <item name="android:background">@drawable/appthemenocol_btn_default_holo_light</item>
+  </style>
 
   <style name="SpinnerAppTheme" parent="android:Widget.Holo.Light.Spinner">
       <item name="android:background">@drawable/apptheme_spinner_background_holo_light</item>

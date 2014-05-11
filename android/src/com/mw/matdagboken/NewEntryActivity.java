@@ -3,6 +3,7 @@ package com.mw.matdagboken;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -15,6 +16,7 @@ import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.ComponentName;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -28,6 +30,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -52,6 +55,7 @@ public class NewEntryActivity extends FoodshotActivity implements View.OnClickLi
 	private Button mTimeEntry = null;
 	private Bitmap mImageBitmap = null;
 	private ImageView mImageView = null;
+	private ArrayList<ImageButton> mMoodButtons = new ArrayList<ImageButton>(); 
 
 	
 	@Override
@@ -100,7 +104,33 @@ public class NewEntryActivity extends FoodshotActivity implements View.OnClickLi
 	    timeEntry.setText(timeStamp);*/
 	    
 		mImageBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_camera_background);
-	    
+		
+		mMoodButtons.add((ImageButton) findViewById(R.id.mood_normal));
+		mMoodButtons.add((ImageButton) findViewById(R.id.mood_happy));
+		mMoodButtons.add((ImageButton) findViewById(R.id.mood_stressed));
+		mMoodButtons.add((ImageButton) findViewById(R.id.mood_sleepy));
+		mMoodButtons.add((ImageButton) findViewById(R.id.mood_angry));
+		View.OnClickListener moodClicklistener = new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v) 
+			{
+				for (int i = 0; i < mMoodButtons.size(); i++)
+				{
+					ImageButton moodView = mMoodButtons.get(i);
+					if (v == moodView)
+					{
+						moodView.setBackgroundResource(R.drawable.apptheme_btn_default_holo_light);
+					}
+					else
+					{
+						moodView.setBackgroundResource(R.drawable.appthemenocol_btn_default_holo_light);
+					}
+				}
+			}
+		};
+		for (int i = 0; i < mMoodButtons.size(); i++)
+			mMoodButtons.get(i).setOnClickListener(moodClicklistener);
 	}
 	
 	private static File tryCreateCameraImageFile()
