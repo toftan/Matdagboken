@@ -32,7 +32,7 @@ public class JSONSerializer
 	public <T> T Read(Class<T> objectType, FileInputStream fileInputSteram)
 	{
 		T objectInstance = null;
-		try
+		/*try
 		{
 			objectInstance = (T) objectType.newInstance();
 		} 
@@ -45,11 +45,11 @@ public class JSONSerializer
 		{
 			System.err.println("JSONSerializer: accessed null object, most likely input object could not be instantiated, probably missing a default constructor.");
 			e1.printStackTrace();
-		}
+		}*/
 		
 		try
 		{
-			mGenson.deserialize(fileInputSteram, objectType);
+			objectInstance = mGenson.deserialize(fileInputSteram, objectType);
 		} 
 		catch (TransformationException e)
 		{

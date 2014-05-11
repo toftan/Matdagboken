@@ -1,13 +1,16 @@
 package com.mw.matdagboken;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 public class EntrySerializer 
 {
@@ -94,6 +97,20 @@ public class EntrySerializer
 		return false;
 	}
 	
+	public static Bitmap tryLoadPGNFile(File file)
+	{
+		Bitmap bitmap = null;
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+		        try {
+		            bitmap = BitmapFactory.decodeStream(new FileInputStream(file), null, options);
+		        } catch (FileNotFoundException e) {
+		            e.printStackTrace();
+		        }
+		        
+		return bitmap;
+	}
+	
 	public static boolean trySaveEntry(Entry entry, Bitmap bitmap, Date date)
 	{
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
@@ -114,5 +131,31 @@ public class EntrySerializer
 		}
 		
 		return true;
+	}
+	
+	public static Entry tryLoadEntry(File file)
+	{
+		Entry entry = null;
+		try
+		{
+			FileInputStream fileInputStream = new FileInputStream(file);
+			JSONSerializer jsonSerializer = new JSONSerializer();
+			entry = jsonSerializer.Read(Entry.class, fileInputStream);
+			try
+			{
+				fileInputStream.close();
+			}
+			catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}		
+		} 
+		catch (FileNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		return entry;	
 	}
 }

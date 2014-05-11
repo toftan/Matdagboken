@@ -8,6 +8,7 @@
     <string name="newEntryActivity">New Entry</string>
     <string name="editEntryActivity">Edit Entry</string>
     <string name="viewEntryActivity">Edit Entry</string>
+    <string name="modifyEntryActivity">Modify Entry</string> 
     <string name="galleryActivity">Gallery</string>
     
     <string name="action_settings">Settings</string>   

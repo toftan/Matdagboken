@@ -44,11 +44,11 @@ import android.widget.Toast;
 public class NewEntryActivity extends FoodshotActivity implements View.OnClickListener, DialogInterface.OnClickListener, DatePickerDialog.OnDateSetListener, OnTimeSetListener
 {
 //	private Date mDate;
-	private Calendar mCalendar = null;
+	protected Calendar mCalendar = null;
 	private static final int REQUEST_CODE_CAMERA_PHOTO = 1000;
 	private static final int REQUEST_CODE_SELECT_PHOTO = 1001;
 	private File mImageFile = null;
-	private Entry mEntry = null;
+	protected Entry mEntry = null;
 	private Button mSaveButton = null;
 	private Button mCancelButton = null;
 	private ImageButton mCalendarButton = null;
@@ -326,7 +326,7 @@ public class NewEntryActivity extends FoodshotActivity implements View.OnClickLi
 		}		
 	}
 	
-	 private void updateDateLabel() 
+	protected void updateDateLabel() 
 	 {
 		SimpleDateFormat calendarDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
 		
@@ -334,7 +334,7 @@ public class NewEntryActivity extends FoodshotActivity implements View.OnClickLi
 		dateEntry.setText(calendarDateFormat.format(mCalendar.getTime()));
 	 }
 	 
-	 private void updateTimeLabel() 
+	 protected void updateTimeLabel() 
 	 {
 		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
 		String timeStamp = timeFormat.format(mCalendar.getTime());
