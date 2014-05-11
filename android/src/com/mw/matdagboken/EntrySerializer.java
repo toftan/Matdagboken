@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 public class EntrySerializer 
 {
@@ -94,6 +95,20 @@ public class EntrySerializer
 		}
 		
 		return false;
+	}
+	
+	public static Bitmap tryLoadPGNFile(File file)
+	{
+		Bitmap bitmap = null;
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+		        try {
+		            bitmap = BitmapFactory.decodeStream(new FileInputStream(file), null, options);
+		        } catch (FileNotFoundException e) {
+		            e.printStackTrace();
+		        }
+		        
+		return bitmap;
 	}
 	
 	public static boolean trySaveEntry(Entry entry, Bitmap bitmap, Date date)

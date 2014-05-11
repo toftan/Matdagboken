@@ -3,8 +3,11 @@ package com.mw.matdagboken;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 public class ModifyEntryActivity extends NewEntryActivity
@@ -17,7 +20,16 @@ public class ModifyEntryActivity extends NewEntryActivity
 		super.onCreate(savedInstanceState);
 		
 		File entryFile = new File("/storage/sdcard0/Matdagboken/20140510_125748/MD_20140510_125748.json");
+		File pngFile = new File("/storage/sdcard0/Matdagboken/20140510_125748/MD_20140510_125748.png");
 		mEntry = EntrySerializer.tryLoadEntry(entryFile);
+		
+		Bitmap bitmap = EntrySerializer.tryLoadPGNFile(pngFile);
+		
+		if(bitmap != null)
+		{
+			ImageView foodImage = (ImageView) findViewById(R.id.foodImage);
+			foodImage.setImageBitmap(bitmap);	
+		}
 		
 		if(mEntry != null)
 		{
@@ -25,8 +37,7 @@ public class ModifyEntryActivity extends NewEntryActivity
 		//	mCalendar.setTime(mEntry.Date);
 			
 			//updateDateLabel();
-			updateTimeLabel();
-			
+			//updateTimeLabel();
 			
 			/*SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
 		    String dateStamp = dateFormat.format(mEntry.Date); 
