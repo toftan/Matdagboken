@@ -26,8 +26,6 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -38,8 +36,9 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
-public class NewEntryActivity extends Activity implements View.OnClickListener, DialogInterface.OnClickListener, DatePickerDialog.OnDateSetListener, OnTimeSetListener
+public class NewEntryActivity extends FoodshotActivity implements View.OnClickListener, DialogInterface.OnClickListener, DatePickerDialog.OnDateSetListener, OnTimeSetListener
 {
 //	private Date mDate;
 	private Calendar mCalendar = null;
@@ -78,8 +77,8 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 		mTimeEntry.setOnClickListener(this);
 		
 		ActionBar actionBar = getActionBar();
-		actionBar.show();
-
+		actionBar.setHomeButtonEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(true);
 		
 		//mDate = new Date();
 		mCalendar = Calendar.getInstance();
@@ -205,16 +204,6 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 	    }
 	}
 	
-	//Add actions to action bar
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) 
-	{
-	    // Inflate the menu items for use in the action bar
-	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.actionbar, menu);
-	    return super.onCreateOptionsMenu(menu);
-	}
-	
 	//Respond to actions in the action bar
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) 
@@ -222,17 +211,12 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 	    // Handle presses on the action bar items
 	    switch (item.getItemId()) 
 	    {
-	        case R.id.ac_backButton:
-	            goBack();
+	        case android.R.id.home:
+	        	finish();
 	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
-	}
-	
-	public void goBack()
-	{
-		
 	}
 
 	@Override
@@ -254,33 +238,15 @@ public class NewEntryActivity extends Activity implements View.OnClickListener, 
 			EditText comment = (EditText) findViewById(R.id.commentEntry);
 			mEntry.Comment = comment.getText().toString();
 				
-			EntrySerializer.trySaveEntry(mEntry, mImageBitmap, mEntry.Date); 
+			EntrySerializer.trySaveEntry(mEntry, mImageBitmap, mEntry.Date);
+
+			Toast.makeText(getBaseContext(), R.string.toast_save, Toast.LENGTH_SHORT).show();
+			
+			finish();
 		}	
 		else if(v == mCancelButton)
 		{
-			/*SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
-		    String dateStamp = dateFormat.format(mDate); 
-		    EditText dateEntry = (EditText) findViewById(R.id.dateEntry);
-		    dateEntry.setText(dateStamp);*/
-			mCalendar = Calendar.getInstance();
-			updateDateLabel();
-			updateTimeLabel();
-		    
-		 /*   SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
-		    String timeStamp = timeFormat.format(mCalendar.getTime());
-		    EditText timeEntry = (EditText) findViewById(R.id.timeEntry);
-		    timeEntry.setText(timeStamp);*/
-		    
-		    //Reset spinner option
-		    ((Spinner) findViewById(R.id.mealTypeEntry)).setSelection(0);;
-		    
-		    ((ImageView) findViewById(R.id.foodImage)).setImageResource(R.drawable.ic_camera_background); //Set mImageBitmap instead as in onCreate()?
-		  
-			((EditText) findViewById(R.id.beverageEntry)).setText("");
-			((EditText) findViewById(R.id.foodEntry)).setText("");
-			((EditText) findViewById(R.id.howEntry)).setText("");
-			((EditText) findViewById(R.id.moodEntry)).setText("");
-			((EditText) findViewById(R.id.commentEntry)).setText("");
+			finish();
 		}
 		else if(v == mImageView)
 		{			

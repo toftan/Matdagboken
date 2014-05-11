@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -18,7 +17,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-public class MainActivity extends Activity implements OnClickListener
+public class MainActivity extends FoodshotActivity implements OnClickListener
 {
 	private LinearLayout mLayout;
 	private Button mNewEntryButton;
