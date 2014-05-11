@@ -1,12 +1,14 @@
 package com.mw.matdagboken;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
 import android.graphics.Bitmap;
 
 public class EntrySerializer 
@@ -114,5 +116,31 @@ public class EntrySerializer
 		}
 		
 		return true;
+	}
+	
+	public static Entry tryLoadEntry(File file)
+	{
+		Entry entry = null;
+		try
+		{
+			FileInputStream fileInputStream = new FileInputStream(file);
+			JSONSerializer jsonSerializer = new JSONSerializer();
+			entry = jsonSerializer.Read(Entry.class, fileInputStream);
+			try
+			{
+				fileInputStream.close();
+			}
+			catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}		
+		} 
+		catch (FileNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		return entry;	
 	}
 }
