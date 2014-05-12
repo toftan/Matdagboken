@@ -12,6 +12,12 @@ import android.graphics.Rect;
 
 public class ImageHelper
 {
+	public static class EntryFile
+	{
+		public File mJsonFile = null;
+		public File mPngFile = null;
+	}
+	
     private static class PngFileFilter implements FilenameFilter
     {
         public boolean accept(File dir, String filename) 
@@ -21,9 +27,9 @@ public class ImageHelper
     }
     private static PngFileFilter sPngFileFilter = new PngFileFilter();
     
-    public static ArrayList<File> getEntryImageFiles()
+    public static ArrayList<EntryFile> getEntryFiles()
     {
-        ArrayList<File> images = new ArrayList<File>();
+        ArrayList<EntryFile> images = new ArrayList<EntryFile>();
         
         String applicationDir = FileHelper.getApplicationExternalStoragePath().getAbsolutePath() + "/Matdagboken/";
         File storageDir = new File(applicationDir);       
@@ -32,17 +38,21 @@ public class ImageHelper
         for (int i=0; i<entryDirs.length; i++)
         {
             File entryDir = entryDirs[i];
+            
             if (entryDir.isDirectory())
             {
-                File imageFiles[] = entryDir.listFiles(sPngFileFilter);
-                for (int j=0; j<imageFiles.length; j++)
-                {
-                    File imageFile = imageFiles[j];
-                    if (imageFile.isFile())
-                    {
-                        images.add(imageFile);
-                    }
-                }
+            	String fileName = entryDir.getName();
+            	String fullFileName = entryDir + "/MD_" + fileName;
+            	File jsonFile = new File(fullFileName + ".json");
+            	File pngFile = new File(fullFileName + ".png");
+            	
+            	if(jsonFile.exists() && pngFile.exists())
+            	{
+            		EntryFile entryFile = new ImageHelper.EntryFile();
+            		entryFile.mJsonFile = jsonFile;
+            		entryFile.mPngFile = pngFile;
+            		images.add(entryFile);
+            	}
             }
         }
         return images;

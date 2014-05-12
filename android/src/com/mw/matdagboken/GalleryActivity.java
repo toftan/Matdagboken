@@ -1,6 +1,7 @@
 package com.mw.matdagboken;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -10,9 +11,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
-public class GalleryActivity extends FoodshotActivity implements OnClickListener
+public class GalleryActivity extends FoodshotActivity implements OnClickListener, OnItemClickListener
 {
 	// Number of columns of Grid View
 	private static final int NUM_OF_COLUMNS = 3;
@@ -60,6 +64,7 @@ public class GalleryActivity extends FoodshotActivity implements OnClickListener
         mGridView.setPadding(padding, padding, padding, padding);
         mGridView.setHorizontalSpacing(padding);
         mGridView.setVerticalSpacing(padding);
+        mGridView.setOnItemClickListener(this);
 	}
 	
 	//Respond to actions in the action bar
@@ -80,7 +85,36 @@ public class GalleryActivity extends FoodshotActivity implements OnClickListener
 	@Override
 	public void onClick(View v)
 	{
-		// TODO Auto-generated method stub	
+		if(v.getTag() != null)
+		{
+			Intent newModifyScreen = new Intent(getApplicationContext(), ModifyEntryActivity.class);
+			ImageHelper.EntryFile entryFile = (ImageHelper.EntryFile) v.getTag();
+			
+			newModifyScreen.putExtra("jsonPath", entryFile.mJsonFile.getAbsolutePath());
+			newModifyScreen.putExtra("pngPath", entryFile.mPngFile.getAbsolutePath());
+			
+			startActivity(newModifyScreen);
+		}
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+	{
+		ImageView imageView = (ImageView) view.findViewById(R.id.gallery_image);
+        if (imageView != null)
+        {
+			if(imageView.getTag() != null)
+			{
+				Intent newModifyScreen = new Intent(getApplicationContext(), ModifyEntryActivity.class);
+				ImageHelper.EntryFile entryFile = (ImageHelper.EntryFile) imageView.getTag();
+				
+				newModifyScreen.putExtra("jsonPath", entryFile.mJsonFile.getAbsolutePath());
+				newModifyScreen.putExtra("pngPath", entryFile.mPngFile.getAbsolutePath());
+				
+				startActivity(newModifyScreen);
+			}
+        }
+		
 	}
 
 }
