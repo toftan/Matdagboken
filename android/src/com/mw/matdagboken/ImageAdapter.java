@@ -15,24 +15,24 @@ import android.widget.LinearLayout;
 public class ImageAdapter extends BaseAdapter
 {
     private Context mContext;
-    ArrayList<File> mImageFiles;
+    ArrayList<ImageHelper.EntryFile> mEntryFiles = null;
     
     public ImageAdapter(Context c) 
     {
         mContext = c;
-        mImageFiles = ImageHelper.getEntryImageFiles();
+        mEntryFiles = ImageHelper.getEntryFiles();
     }
 
     @Override
     public int getCount()
     {
-        return mImageFiles.size();
+        return mEntryFiles.size();
     }
 
     @Override
     public Object getItem(int position)
     {
-         return mImageFiles.get(position);
+         return mEntryFiles.get(position);
     }
 
     @Override
@@ -58,9 +58,10 @@ public class ImageAdapter extends BaseAdapter
         ImageView imageView = (ImageView) layout.findViewById(R.id.gallery_image);
         if (imageView != null)
         {
-        	File imagefile = (File) getItem(position);
-            Bitmap bitmap = ImageHelper.decodeAndCropFileToFitSize(imagefile, 128);
+        	ImageHelper.EntryFile imagefile = (ImageHelper.EntryFile) getItem(position);
+            Bitmap bitmap = ImageHelper.decodeAndCropFileToFitSize(imagefile.mPngFile, 128);
             imageView.setImageBitmap(bitmap);
+            imageView.setTag(imagefile);
         }
         
         return layout;
