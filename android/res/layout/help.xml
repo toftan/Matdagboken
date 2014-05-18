@@ -12,7 +12,6 @@
      <Button
         android:id="@+id/dialogCloseButton"
         android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:text="Close" />
+        android:layout_height="wrap_content" />
     
 </LinearLayout>

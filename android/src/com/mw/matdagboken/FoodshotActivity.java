@@ -3,6 +3,7 @@ package com.mw.matdagboken;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -38,22 +39,16 @@ public class FoodshotActivity extends Activity
 		    // Pass null as the parent view because its going in the dialog layout
 		    builder.setView(inflater.inflate(R.layout.help, null));
 		    final AlertDialog alert = builder.create();
-			Button closeButton = (Button) findViewById(R.id.dialogCloseButton);
-
- 
-		    closeButton.setOnClickListener(
-		    
-		    new OnClickListener()
+			alert.setButton(DialogInterface.BUTTON_NEUTRAL, "Close",  new DialogInterface.OnClickListener()
 		    {
-		        @Override
-		        public void onClick(View v)
-		        {
-		        	alert.dismiss();
-		        }
+				@Override
+				public void onClick(DialogInterface dialog, int which)
+				{
+					alert.dismiss();
+					
+				}
 		    });
-		    
-		    alert.show();
-
+			alert.show();
 		}
 		
 		//Respond to actions in the action bar
