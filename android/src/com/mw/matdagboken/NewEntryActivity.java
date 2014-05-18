@@ -55,7 +55,7 @@ public class NewEntryActivity extends FoodshotActivity implements View.OnClickLi
 	private Button mTimeEntry = null;
 	private Bitmap mImageBitmap = null;
 	private ImageView mImageView = null;
-	private ArrayList<ImageButton> mMoodButtons = new ArrayList<ImageButton>(); 
+	protected ArrayList<ImageButton> mMoodButtons = new ArrayList<ImageButton>(); 
 
 	
 	@Override
@@ -121,6 +121,7 @@ public class NewEntryActivity extends FoodshotActivity implements View.OnClickLi
 					if (v == moodView)
 					{
 						moodView.setBackgroundResource(R.drawable.apptheme_btn_default_holo_light);
+						mEntry.MoodIcon = i;
 					}
 					else
 					{
@@ -254,7 +255,8 @@ public class NewEntryActivity extends FoodshotActivity implements View.OnClickLi
 	{
 		if(v == mSaveButton)
 		{
-			mEntry.Date = mCalendar.getTime();
+			Date date = mCalendar.getTime();
+			mEntry.Date = date.getTime();
 			Spinner spinner = (Spinner) findViewById(R.id.mealTypeEntry);
 			mEntry.Meal = spinner.getSelectedItemPosition();
 			EditText beverage = (EditText) findViewById(R.id.beverageEntry);
@@ -268,7 +270,7 @@ public class NewEntryActivity extends FoodshotActivity implements View.OnClickLi
 			EditText comment = (EditText) findViewById(R.id.commentEntry);
 			mEntry.Comment = comment.getText().toString();
 				
-			EntrySerializer.trySaveEntry(mEntry, mImageBitmap, mEntry.Date);
+			EntrySerializer.trySaveEntry(mEntry, mImageBitmap, date);
 
 			Toast.makeText(getBaseContext(), R.string.toast_save, Toast.LENGTH_SHORT).show();
 			
