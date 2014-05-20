@@ -2,16 +2,11 @@ package com.mw.matdagboken;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.ImageView;
 
 public class FoodshotActivity extends Activity
 {
@@ -22,8 +17,7 @@ public class FoodshotActivity extends Activity
 		    // Inflate the menu items for use in the action bar
 		    MenuInflater inflater = getMenuInflater();
 		    inflater.inflate(R.menu.actionbar, menu);
-		    return super.onCreateOptionsMenu(menu);
-		    
+		    return super.onCreateOptionsMenu(menu);		    
 		}
 			
 		public void openSettings()
@@ -45,7 +39,6 @@ public class FoodshotActivity extends Activity
 				public void onClick(DialogInterface dialog, int which)
 				{
 					alert.dismiss();
-					
 				}
 		    });
 			alert.show();

@@ -16,21 +16,16 @@ import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.ComponentName;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -43,7 +38,6 @@ import android.widget.Toast;
 
 public class NewEntryActivity extends FoodshotActivity implements View.OnClickListener, DialogInterface.OnClickListener, DatePickerDialog.OnDateSetListener, OnTimeSetListener
 {
-//	private Date mDate;
 	protected Calendar mCalendar = null;
 	private static final int REQUEST_CODE_CAMERA_PHOTO = 1000;
 	private static final int REQUEST_CODE_SELECT_PHOTO = 1001;
@@ -84,24 +78,14 @@ public class NewEntryActivity extends FoodshotActivity implements View.OnClickLi
 		actionBar.setHomeButtonEnabled(true);
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		
-		//mDate = new Date();
 		mCalendar = Calendar.getInstance();
 		updateDateLabel();
 		updateTimeLabel();
-		/*SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
-	    String dateStamp = dateFormat.format(mDate); 
-	    EditText dateEntry = (EditText) findViewById(R.id.dateEntry);
-	    dateEntry.setText(dateStamp);*/
 	    
 	    SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
 	    String dayStamp = dayFormat.format(mCalendar.getTime()); 
 	    TextView dayEntry = (TextView) findViewById(R.id.dayTitle);
 	    dayEntry.setText(dayStamp);
-	    
-	/*    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
-	    String timeStamp = timeFormat.format(mCalendar.getTime());
-	    EditText timeEntry = (EditText) findViewById(R.id.timeEntry);
-	    timeEntry.setText(timeStamp);*/
 	    
 		mImageBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_camera_background);
 		
@@ -256,7 +240,8 @@ public class NewEntryActivity extends FoodshotActivity implements View.OnClickLi
 		if(v == mSaveButton)
 		{
 			Date date = mCalendar.getTime();
-			mEntry.Date = date.getTime();
+			mEntry.Date = date;
+			mEntry.Time = date.getTime();
 			Spinner spinner = (Spinner) findViewById(R.id.mealTypeEntry);
 			mEntry.Meal = spinner.getSelectedItemPosition();
 			EditText beverage = (EditText) findViewById(R.id.beverageEntry);
@@ -297,14 +282,6 @@ public class NewEntryActivity extends FoodshotActivity implements View.OnClickLi
 			(datePickerDialog.getDatePicker()).setSpinnersShown(false);
 			datePickerDialog.show();
 
-		/*	DatePicker datePicker = new DatePicker(NewEntryActivity.this);
-			datePicker.setSpinnersShown(false);
-			
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle(R.string.datePicker_title);
-			builder.setView(datePicker);
-			AlertDialog alert = builder.create();
-			alert.show();		*/
 		}
 		else if(v == mTimeEntry)
 		{		

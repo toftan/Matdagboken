@@ -47,7 +47,7 @@ public class EntrySerializer
 			fileOutpuStream = new FileOutputStream(file);
 			JSONSerializer jsonSerializer = new JSONSerializer();
 			jsonSerializer.Write(entry, fileOutpuStream);
-			
+
 			try 
 			{
 				fileOutpuStream.flush();
@@ -68,18 +68,18 @@ public class EntrySerializer
 		return false;
 	}
 	
-	private static boolean trySavePGNFile(File file, Bitmap bitmap)
+	private static boolean trySavePNGFile(File file, Bitmap bitmap)
 	{
-		FileOutputStream fileOutpuStream;
+		FileOutputStream fileOutputStream;
 		try 
 		{
-			fileOutpuStream = new FileOutputStream(file);
-			bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutpuStream);
+			fileOutputStream = new FileOutputStream(file);
+			bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
 			
 			try
 			{
-				fileOutpuStream.flush();
-				fileOutpuStream.close();
+				fileOutputStream.flush();
+				fileOutputStream.close();
 				return true;
 			} 
 			catch(IOException e) 
@@ -126,7 +126,7 @@ public class EntrySerializer
 		File imageFile = tryCreateEntryFile(timeStamp, ".png");
 		if (imageFile != null)
 		{
-			if (!trySavePGNFile(imageFile, bitmap))
+			if (!trySavePNGFile(imageFile, bitmap))
 				return false;
 		}
 		

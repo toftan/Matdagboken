@@ -4,12 +4,14 @@ import java.util.Date;
 
 public class Entry
 {
-	public long Date;
+	public Date Date;
+	public long Time;
 	public int Meal;
-	public String Beverage = "Lax";
-	public String Food = "Så jälva torrt";
-	public String How = "Så jälva torrt";
-	public String Mood = "Så jälva torrt";
+	public String Beverage = "Klunk klunk";
+	public String Food = "Nom nom";
+	public String How = "Where am I?";
+	public String Mood = "I feel like dancing";
 	public int MoodIcon;
-	public String Comment = "Så jälva torrt";
+	public String Comment = "To be..";
 }
+

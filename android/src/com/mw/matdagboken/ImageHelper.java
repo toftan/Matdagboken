@@ -1,7 +1,6 @@
 package com.mw.matdagboken;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.util.ArrayList;
 
 import android.graphics.Bitmap;
@@ -17,15 +16,6 @@ public class ImageHelper
 		public File mJsonFile = null;
 		public File mPngFile = null;
 	}
-	
-    private static class PngFileFilter implements FilenameFilter
-    {
-        public boolean accept(File dir, String filename) 
-        {
-            return filename.endsWith(".png");
-        }
-    }
-    private static PngFileFilter sPngFileFilter = new PngFileFilter();
     
     public static ArrayList<EntryFile> getEntryFiles()
     {

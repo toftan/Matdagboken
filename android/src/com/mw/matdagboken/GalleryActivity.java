@@ -2,10 +2,8 @@ package com.mw.matdagboken;
 
 import android.app.ActionBar;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,11 +17,11 @@ import android.widget.GridView;
 public class GalleryActivity extends FoodshotActivity implements OnClickListener, OnItemClickListener
 {
 	// Number of columns of Grid View
-	private static final int NUM_OF_COLUMNS = 3;
+	//private static final int NUM_OF_COLUMNS = 3;
     // Gridview image padding
-    private static final int GRID_PADDING = 4; // in dp
+    //private static final int GRID_PADDING = 4; // in dp
 	
-	private GridView mGridView; //Why not set to null??
+	private GridView mGridView = null;
 	//private ArrayList<Item> mGridArray = new ArrayList<Item>(); 
 	//private ImageAdapter mCustomImageAdapter;
 	
@@ -53,7 +51,7 @@ public class GalleryActivity extends FoodshotActivity implements OnClickListener
 		actionBar.setHomeButtonEnabled(true);
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		
-		Resources r = getResources();
+		/*Resources r = getResources();
         float floatPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, GRID_PADDING, r.getDisplayMetrics());
         int columnWidth = (int) ((getScreenWidth() - ((NUM_OF_COLUMNS + 1) * floatPadding)) / NUM_OF_COLUMNS);
         mGridView.setNumColumns(NUM_OF_COLUMNS);
@@ -63,7 +61,7 @@ public class GalleryActivity extends FoodshotActivity implements OnClickListener
         int padding = (int) floatPadding;
         mGridView.setPadding(padding, padding, padding, padding);
         mGridView.setHorizontalSpacing(padding);
-        mGridView.setVerticalSpacing(padding);
+        mGridView.setVerticalSpacing(padding);*/
         mGridView.setOnItemClickListener(this);
 	}
 	

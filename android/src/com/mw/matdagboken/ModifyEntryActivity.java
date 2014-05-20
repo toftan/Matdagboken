@@ -2,9 +2,6 @@ package com.mw.matdagboken;
 
 import java.io.File;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
@@ -43,7 +40,7 @@ public class ModifyEntryActivity extends NewEntryActivity
 			
 			if(mEntry != null)
 			{
-				Date date = new Date(mEntry.Date);
+				Date date = new Date(mEntry.Time);
 				mCalendar.setTime(date);
 				
 				updateDateLabel();

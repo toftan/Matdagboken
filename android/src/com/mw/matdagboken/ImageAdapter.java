@@ -1,11 +1,8 @@
 package com.mw.matdagboken;
 
-import java.io.File;
 import java.util.ArrayList;
-
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -14,12 +11,10 @@ import android.widget.LinearLayout;
 
 public class ImageAdapter extends BaseAdapter
 {
-    private Context mContext;
     ArrayList<ImageHelper.EntryFile> mEntryFiles = null;
     
     public ImageAdapter(Context c) 
     {
-        mContext = c;
         mEntryFiles = ImageHelper.getEntryFiles();
     }
 

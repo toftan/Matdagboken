@@ -62,7 +62,4 @@ public class FileHelper
 	{
 		return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 	}
-
-	
-
 }
